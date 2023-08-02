@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const API_BASE_URL = 'http://localhost:4000'; // Replace with the base URL of your API server
+const API_BASE_URL = 'https://oce3.onrender.com'; // Replace with the base URL of your API server
 const API_KEY = 'avinash'; // Replace with your API key
 
 const DocumentUpload = () => {
