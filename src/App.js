@@ -1,47 +1,44 @@
 import React, { useState } from 'react';
 
+// Replace the API_BASE_URL and API_KEY with your own values
 const API_BASE_URL = 'https://dataextractengine.onrender.com'; 
-//const API_BASE_URL = 'http://localhost:4000'; // Replace with the base URL of your API server
-const API_KEY = 'avinash'; // Replace with your API key
+
+//const API_BASE_URL = 'http://localhost:4000';
+const API_KEY = 'avinash';
 
 const DocumentUpload = () => {
-  const [selectedFiles, setSelectedFiles] = useState({
-    document1: null,
-    document2: null,
-  });
+  const [selectedFiles, setSelectedFiles] = useState([]);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
-  const [loading, setLoading] = useState(false); // Add loading state
+  const [loading, setLoading] = useState(false);
 
   const handleFileChange = (event) => {
-    const file1 = event.target.files[0];
-    const file2 = event.target.files[1];
+    const files = event.target.files;
+    const maxFiles = 2;
 
-    if (event.target.files.length > 2) {
-      setError('Please select only two files.');
-      return;
+    // Ensure the user selects up to two files
+    if (files.length <= maxFiles) {
+      setSelectedFiles(Array.from(files));
+    } else {
+      setError(`Please select a maximum of ${maxFiles} files.`);
     }
-
-    setSelectedFiles({
-      document1: file1,
-      document2: file2,
-    });
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    if (!selectedFiles.document1 || !selectedFiles.document2) {
-      setError('Please select both files.');
+    if (selectedFiles.length === 0) {
+      setError('Please select at least one file.');
       return;
     }
 
     const formData = new FormData();
-    formData.append('document1', selectedFiles.document1);
-    formData.append('document2', selectedFiles.document2);
+    selectedFiles.forEach((file, index) => {
+      formData.append(`document${index + 1}`, file);
+    });
 
     try {
-      setLoading(true); // Set loading to true while waiting for the response
+      setLoading(true);
 
       const response = await fetch(`${API_BASE_URL}/extract`, {
         method: 'POST',
@@ -63,16 +60,16 @@ const DocumentUpload = () => {
       setError('Failed to send files to the server.');
       setResult(null);
     } finally {
-      setLoading(false); // Set loading back to false after the response
+      setLoading(false);
     }
   };
 
   return (
     <div>
-      <h1>Upload Documents</h1>
+      <h1>Upload Documents (Up to 2)</h1>
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="fileInput">Select Two Documents:</label>
+          <label htmlFor="fileInput">Select Files:</label>
           <input
             type="file"
             id="fileInput"
@@ -83,7 +80,7 @@ const DocumentUpload = () => {
         </div>
         <button type="submit">Upload and Extract</button>
       </form>
-      {loading && <div className="spinner"></div>} {/* Display spinner when loading */}
+      {loading && <div className="spinner"></div>}
       {error && <div style={{ color: 'red' }}>{error}</div>}
       {result && (
         <div>
