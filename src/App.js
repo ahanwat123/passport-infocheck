@@ -9,8 +9,10 @@ const API_KEY = 'avinash';
 const DocumentUpload = () => {
   const [selectedFiles, setSelectedFiles] = useState([]);
   const [result, setResult] = useState(null);
+  const [result1, setResult1] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -21,6 +23,37 @@ const DocumentUpload = () => {
       setSelectedFiles(Array.from(files));
     } else {
       setError(`Please select a maximum of ${maxFiles} files.`);
+    }
+  };
+  const handleFileChange2 = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+  const handleConversion = async () => {
+    if (!file) {
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('pdf', file);
+
+    try {
+      const response = await fetch('http://localhost:3000/convert-pdf', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await response.json();
+        if (response.ok) {
+          setResult1(data);
+          setError(null);
+        } else {
+          setError(data.error || 'Something went wrong.');
+          setResult(null);
+        }
+      
+    } catch (error) {
+      console.error('Error:', error);
     }
   };
 
@@ -88,6 +121,15 @@ const DocumentUpload = () => {
           <pre>{JSON.stringify(result, null, 2)}</pre>
         </div>
       )}
+       <div>
+      <h1>PDF to Image Conversion</h1>
+      <input type="file" accept=".pdf" onChange={handleFileChange2} />
+      <button onClick={handleConversion}>Convert PDF to Image</button>
+      <div>
+          <h2>Response Data:</h2>
+          <pre>{JSON.stringify(result1, null, 2)}</pre>
+        </div>
+    </div>
     </div>
   );
 };
