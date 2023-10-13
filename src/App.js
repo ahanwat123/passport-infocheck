@@ -38,7 +38,7 @@ const DocumentUpload = () => {
     formData.append('pdf', file);
 
     try {
-      const response = await fetch('http://localhost:3000/convert-pdf', {
+      const response = await fetch('https://dataextractengine.onrender.com/convert-pdf', {
         method: 'POST',
         body: formData,
       });
