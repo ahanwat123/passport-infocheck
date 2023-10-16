@@ -11,6 +11,20 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+.left-div {
+  width: 50%;
+  float: left;
+  background-color: lightblue;
+  height: 300px;
+}
+
+.right-div {
+  width: 50%;
+  float: right;
+  background-color: lightgreen;
+  height: 300px;
+}
+
 
 .App-header {
   background-color: #282c34;
