@@ -108,7 +108,7 @@ setLoading(true)
     <div>
       <div className='left-div'>
       <form onSubmit={handleSubmit}>
-      <h1>Upload Documents (Up to 2)</h1>
+      <h1> Extract Paasport and ResedentialId Data</h1>
         <div>
           <label htmlFor="fileInput">Select Files:</label>
           <input
@@ -122,19 +122,19 @@ setLoading(true)
         <button type="submit">Upload and Extract</button>
       </form>
       {error && <div style={{ color: 'red' }}>{error}</div>}
-      {loading==true?<p>Loading</p>:
+      {loading==true?<p>Loading . . .</p>:
         <div>
           <h2>Response Data:</h2>
           <pre>{JSON.stringify(result, null, 2)}</pre>
         </div>}  
         </div>   
       <div className='right-div'>
-       <h1>Extract driver licence</h1>
+       <h1>Extract Mulkia licence</h1>
        <input type="file" accept=".pdf, image/*" onChange={handleFileChange2} />
        <button onClick={handleConversion}>Upload and Extract data</button>
        <div>
           <h2>Response Data:</h2>
-          {loading1==true?<p>Loading</p>:
+          {loading1==true?<p>Loading . . . </p>:
           <pre>{JSON.stringify(result1, null, 2)}</pre>}
         </div>
     </div>
