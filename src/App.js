@@ -108,7 +108,7 @@ setLoading(true)
     <div>
       <div className='left-div'>
       <form onSubmit={handleSubmit}>
-      <h1> Extract Paasport and ResedentialId Data</h1>
+      <h1> Extract Passport and Residential Id Data</h1>
         <div>
           <label htmlFor="fileInput">Select Files:</label>
           <input
