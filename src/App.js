@@ -108,7 +108,7 @@ setLoading(true)
     <div>
       <div className='left-div'>
       <form onSubmit={handleSubmit}>
-      <h1> Extract Passport and Residential Id Data</h1>
+      <h1> Extract Passport and Resident Id Data</h1>
         <div>
           <label htmlFor="fileInput">Select Files:</label>
           <input
@@ -129,7 +129,7 @@ setLoading(true)
         </div>}  
         </div>   
       <div className='right-div'>
-       <h1>Extract Mulkia licence</h1>
+       <h1>Extract Mulkia </h1>
        <input type="file" accept=".pdf, image/*" onChange={handleFileChange2} />
        <button onClick={handleConversion}>Upload and Extract data</button>
        <div>
